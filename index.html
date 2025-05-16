@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My GitHub Page</title>
+    <title>My GitHub Page with Python</title>
+    <script type="module">
+        import { loadPyodide } from "https://cdn.jsdelivr.net/pyodide/v0.23.0/full/pyodide.mjs";
+
+        async function runPython() {
+            const pyodide = await loadPyodide();
+            const inputText = document.getElementById("inputText").value;
+            const result = await pyodide.runPythonAsync(`
+text = '''${inputText}'''
+text.upper()
+            `);
+            document.getElementById("outputText").innerText = result;
+        }
+    </script>
 </head>
 <body>
-    <h1>Welcome to My GitHub Page</h1>
-    <p>This is a simple website hosted on GitHub Pages.</p>
+    <h1>My GitHub Page with Python</h1>
+    <p>Enter text below and see it transformed using Python:</p>
+    <input type="text" id="inputText" placeholder="Type something..." />
+    <button onclick="runPython()">Run Python Code</button>
+
+    <h3>Output:</h3>
+    <p id="outputText">Your result will appear here.</p>
 </body>
 </html>
