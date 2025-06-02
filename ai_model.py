@@ -7,7 +7,7 @@ def interpret_question_with_ai(
     audio_file_path: str,
     riddle: str,
     riddle_answer: str,
-) -> bytes:
+) -> tuple[str, bytes]:
     """
     1. Transcreve o áudio para texto.
     2. Envia o texto para a função Groq utilitária para obter a resposta bruta.
@@ -40,7 +40,7 @@ def interpret_question_with_ai(
 
     final_answer_audio = text_to_audio_bytes(final_answer_text)
 
-    return final_answer_audio
+    return final_answer_text, final_answer_audio
 
 # Exemplo de uso (para teste local)
 """
@@ -54,10 +54,16 @@ if __name__ == "__main__":
     riddle_answer_example = "Respiração"
 
     print(f"\nTestando com áudio: {test_audio_path}")
-    response = interpret_question_with_ai(
+    text_resp, audio_resp_bytes = interpret_question_with_ai( # Changed to get both text and audio
         test_audio_path,
         riddle_example,
         riddle_answer_example
     )
-    print(f"Resposta final da Entidade: {response}")
+    print(f"Resposta de texto final da Entidade: {text_resp}")
+    if audio_resp_bytes:
+        with open("resposta_entidade_piper_test.mp3", "wb") as f:
+            f.write(audio_resp_bytes)
+        print("Áudio da resposta salvo como 'resposta_entidade_piper_test.mp3'")
+    else:
+        print("Nenhum áudio de resposta foi gerado.")
 """
