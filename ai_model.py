@@ -1,7 +1,5 @@
-import os
 from groq_utils import get_groq_raw_interpretation
 from utils import audio_to_text, text_to_audio_bytes
-
 
 def interpret_question_with_ai(
     audio_file_path: str,
@@ -17,9 +15,12 @@ def interpret_question_with_ai(
     user_question_text = audio_to_text(audio_file_path)
 
     if not user_question_text:
-        return "Não consegui entender sua pergunta no áudio. Por favor, tente novamente."
+        error_msg = "Não consegui entender sua pergunta no áudio. Por favor, tente novamente."
+        error_audio = text_to_audio_bytes(error_msg) # Generate audio for this error message
+        return error_msg, error_audio # <-- Now returns a tuple consistent with the type hint
 
     # Obtém a resposta bruta do Groq
+    print(user_question_text)
     groq_raw_response = get_groq_raw_interpretation(user_question_text, riddle, riddle_answer)
 
     final_answer_text: str
