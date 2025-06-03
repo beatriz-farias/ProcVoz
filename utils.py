@@ -1,10 +1,9 @@
 import speech_recognition as sr
 from pydub import AudioSegment
-import io
+import pyttsx3 
 import os
-import subprocess 
-import tempfile   
-import uuid 
+import io
+import tempfile
 
 PIPER_EXECUTABLE_PATH = os.path.join(os.path.dirname(__file__), 'voices', 'piper.exe')
 PIPER_VOICE_MODEL = os.path.join(os.path.dirname(__file__), 'voices', 'pt_BR-faber-medium.onnx')
@@ -59,54 +58,59 @@ def audio_to_text(audio_file_path: str) -> str:
         return ""
     
 def text_to_audio_bytes(text: str) -> bytes:
-    """
-    Converts text to speech audio bytes using Piper TTS (offline).
-    Calls the Piper executable via subprocess.
-    """
-    if not os.path.exists(PIPER_EXECUTABLE_PATH) or not os.path.exists(PIPER_VOICE_MODEL):
-        print("Piper TTS não configurado corretamente. Não é possível gerar áudio.")
-        return b""
+    engine = pyttsx3.init()
 
+    # --- Verificação e Seleção de Vozes ---
+    voices = engine.getProperty('voices')
+
+    # Opcional: Imprimir todas as vozes disponíveis para você escolher no console
+    # print("Vozes disponíveis:")
+    # for i, voice in enumerate(voices):
+    #     print(f"{i}: ID={voice.id}, Nome={voice.name}, Lang={voice.languages}, Gênero={voice.gender}")
+
+    # Tentar encontrar uma voz em Português do Brasil (pt-BR) ou Português (pt)
+    selected_voice_id = None
+    for voice in voices:
+        # Tenta encontrar uma voz em pt-BR primeiro, depois pt
+        if "pt-BR" in voice.languages or "pt_BR" in voice.id: # pt_BR-edresson-medium (se for o caso)
+             selected_voice_id = voice.id
+             break
+        elif "pt" in voice.languages: # Ou uma voz portuguesa genérica
+            selected_voice_id = voice.id
+            # Não break ainda, para tentar achar pt-BR primeiro
+
+    if selected_voice_id:
+        engine.setProperty('voice', selected_voice_id)
+        print(f"DEBUG TTS: Usando voz: {engine.getProperty('voice')}")
+    else:
+        print("DEBUG TTS: Nenhuma voz em português encontrada. Usando voz padrão.")
+    # --- Fim da Seleção de Vozes ---
+
+    # Configurar taxa de fala (opcional)
+    # engine.setProperty('rate', 175) # Ex: 175 palavras por minuto (padrão ~200)
+
+    audio_buffer = io.BytesIO()
+
+    # pyttsx3 precisa salvar em um arquivo temporário primeiro, depois lemos os bytes
+    # O mesmo truque que usamos para o Piper
     try:
-        # Command to run Piper. Piper reads text from stdin and outputs raw audio to stdout.
-        # We specify --output-raw to get PCM data, then specify sample rate and format
-        # to pydub.
-        command = [
-            PIPER_EXECUTABLE_PATH,
-            '--model', PIPER_VOICE_MODEL,
-            '--output-raw'
-        ]
+        with tempfile.NamedTemporaryFile(suffix='.mp3', delete=False) as fp:
+            temp_audio_path = fp.name
 
-        process = subprocess.Popen(
-            command,
-            stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
-        )
+        engine.save_to_file(text, temp_audio_path)
+        engine.runAndWait() # ESPERA A FALA SER GERADA E SALVA NO ARQUIVO
 
-        # Send text to Piper's stdin and read raw audio from its stdout
-        raw_audio_data, stderr_output = process.communicate(input=text.encode('utf-8'))
-
-        if process.returncode != 0:
-            print(f"Erro ao executar Piper: {stderr_output.decode('utf-8')}")
+        if not os.path.exists(temp_audio_path) or os.path.getsize(temp_audio_path) == 0:
+            print("ERRO: pyttsx3 não conseguiu criar ou salvar o arquivo de áudio temporário.")
             return b""
 
-        # Piper outputs 16-bit mono PCM at the voice's sample rate (PIPER_SAMPLE_RATE).
-        audio_segment = AudioSegment(
-            raw_audio_data,
-            frame_rate=PIPER_SAMPLE_RATE,
-            sample_width=2, # 16-bit audio is 2 bytes per sample
-            channels=1      # Mono
-        )
+        with open(temp_audio_path, "rb") as f:
+            audio_bytes = f.read()
+        return audio_bytes
 
-        audio_buffer = io.BytesIO()
-        audio_segment.export(audio_buffer, format="mp3") # Export as MP3
-        audio_buffer.seek(0)
-        return audio_buffer.getvalue()
-
-    except FileNotFoundError:
-        print(f"Erro: Piper executável não encontrado em '{PIPER_EXECUTABLE_PATH}'. Verifique o caminho.")
-        return b""
     except Exception as e:
-        print(f"Erro ao gerar áudio de texto com Piper: {e}")
+        print(f"Erro ao gerar áudio com pyttsx3 (salvando/lendo): {e}")
         return b""
+    finally:
+        if 'temp_audio_path' in locals() and os.path.exists(temp_audio_path):
+            os.remove(temp_audio_path) # Limpa o arquivo temporário
