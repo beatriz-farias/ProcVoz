@@ -78,12 +78,6 @@ def text_to_audio_bytes(text: str) -> bytes:
         elif "pt" in voice.languages: # Ou uma voz portuguesa genérica
             selected_voice_id = voice.id
             # Não break ainda, para tentar achar pt-BR primeiro
-
-    if selected_voice_id:
-        engine.setProperty('voice', selected_voice_id)
-        print(f"DEBUG TTS: Usando voz: {engine.getProperty('voice')}")
-    else:
-        print("DEBUG TTS: Nenhuma voz em português encontrada. Usando voz padrão.")
     # --- Fim da Seleção de Vozes ---
 
     # Configurar taxa de fala (opcional)

@@ -180,7 +180,7 @@
         <p id="ai-response"></p>
         <p class="error-message" id="error-message"></p>
         <p class="disclaimer">
-            Este jogo utiliza processamento de voz offline (Piper TTS) e IA (Groq) para as interações.
+            Este jogo utiliza processamento de voz offline e IA para as interações.
         </p>
     </div>
 
@@ -268,7 +268,6 @@
                     method: 'POST',
                     body: formData
                 });
-
                 if (!response.ok) {
                     const errorData = await response.json();
                     throw new Error(`Erro na API: ${response.status} ${response.statusText} - ${errorData.detail || 'Detalhe desconhecido'}`);
