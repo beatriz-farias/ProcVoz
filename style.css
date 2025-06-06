@@ -1,0 +1,167 @@
+:root {
+    --dark-bg: #1a1a1a;
+    --darker-bg: #111;
+    --container-bg: #2b2b2b;
+    --border-color: #ff4500;
+    --text-color: #e0e0e0;
+    --accent-color: #aaffaa;
+    --error-color: #ff6347;
+    --shadow-color: rgba(255, 69, 0, 0.5);
+    --transition-speed: 0.3s;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    /*background-image: url('https://www.transparenttextures.com/patterns/dark-fish-skin.png');*/
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Creepster', cursive;
+    font-size: 3.5em;
+    color: var(--border-color);
+    text-shadow: 3px 3px 6px var(--shadow-color);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+h2 {
+    font-size: 1.2em;
+    color: var(--text-color);
+    margin-top: 0;
+    margin-bottom: 40px;
+    opacity: 0.8;
+}
+
+.game-container {
+    background-color: var(--container-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 0 25px var(--shadow-color);
+    width: 90%;
+    max-width: 700px;
+    text-align: center;
+    animation: fadeIn 1.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#story-text {
+    min-height: 100px;
+    background-color: var(--darker-bg);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    text-align: left;
+    white-space: pre-wrap;
+    font-size: 1.1em;
+    line-height: 1.6;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: var(--border-color);
+    color: white;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: background-color var(--transition-speed) ease, transform 0.1s ease, box-shadow var(--transition-speed) ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+button:hover {
+    background-color: #e63900;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 69, 0, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(255, 69, 0, 0.3);
+}
+
+button:disabled {
+    background-color: #555;
+    color: #bbb;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+#recording-status {
+    margin-top: 15px;
+    font-size: 1em;
+    font-style: italic;
+    color: #bbb;
+}
+
+#ai-response {
+    margin-top: 25px;
+    font-size: 1.6em;
+    font-weight: 600;
+    color: var(--accent-color);
+    min-height: 40px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    animation: pulseText 1.5s infinite alternate;
+}
+
+@keyframes pulseText {
+    from { opacity: 0.7; }
+    to { opacity: 1; }
+}
+
+.error-message {
+    margin-top: 15px;
+    font-size: 0.95em;
+    color: var(--error-color);
+    font-weight: 600;
+}
+
+.disclaimer {
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 30px;
+    text-align: center;
+}
+
+#particle-canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding-top: 20vh;
+}
