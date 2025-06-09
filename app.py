@@ -13,6 +13,7 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:3000",
+    "http://localhost:3002",
     "http://127.0.0.1:5500",
     # Add your production site domain here, e.g., "https://seujogo.com"
 ]
