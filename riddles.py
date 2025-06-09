@@ -1,3 +1,4 @@
+# riddles.py
 
 RIDDLES = [
     {
@@ -24,13 +25,14 @@ RIDDLES = [
 ]
 
 def get_riddle_by_id(riddle_id: int):
+    """Retorna os dados completos de uma charada pelo seu ID."""
     for riddle in RIDDLES:
         if riddle['id'] == riddle_id:
             return riddle
     return None # Retorna None se a charada não for encontrada
 
 def get_next_riddle_id(current_riddle_id: int):
-    """Retorna o ID da próxima charada, ou None se for a última."""
+    """Retorna o ID da próxima charada na sequência, ou None se for a última."""
     current_index = -1
     for i, riddle in enumerate(RIDDLES):
         if riddle['id'] == current_riddle_id:
@@ -42,4 +44,5 @@ def get_next_riddle_id(current_riddle_id: int):
     return None # Última charada ou não encontrada
 
 def get_first_riddle_id():
+    """Retorna o ID da primeira charada da lista."""
     return RIDDLES[0]['id'] if RIDDLES else None
