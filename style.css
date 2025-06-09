@@ -1,39 +1,38 @@
 :root {
-    --dark-bg: #1a1a1a;
-    --darker-bg: #111;
-    --container-bg: #2b2b2b;
-    --border-color: #ff4500;
-    --text-color: #e0e0e0;
-    --accent-color: #aaffaa;
-    --error-color: #ff6347;
-    --shadow-color: rgba(255, 69, 0, 0.5);
-    --transition-speed: 0.3s;
-}
+          --dark-bg: #1a1a1a;
+          --darker-bg: #000;
+          --container-bg: #2b2b2b;
+          --shadow-color: rgba(70, 9, 48, 0.507);
+          --principal-color: #791255;
+          --text-color: #dddddd;
+          --accent-color: #bebebe;
+          --error-color: #dddddd;
+          --border-color: rgba(112, 15, 78, 0.507);
+          --transition-speed: 0.3s;
+      }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--dark-bg);
+    font-family: 'Poppins', sans-serif; /* Fonte geral mais limpa */
+    background-color: var(--darker-bg);
     color: var(--text-color);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    overflow: hidden;
     margin: 0;
     padding: 20px;
     box-sizing: border-box;
-    /*background-image: url('https://www.transparenttextures.com/patterns/dark-fish-skin.png');*/
     text-align: center;
 }
 
 h1 {
-    font-family: 'Creepster', cursive;
-    font-size: 3.5em;
-    color: var(--border-color);
-    text-shadow: 3px 3px 6px var(--shadow-color);
+    font-family: 'Creepster', cursive; /* Fonte especial para o título */
+    font-size: 3.5em; /* Tamanho maior */
+    color: var(--principal-color);
+    text-shadow: 3px 3px 6px var(--shadow-color); /* Sombra mais intensa */
     margin-bottom: 10px;
-    letter-spacing: 2px;
+    letter-spacing: 2px; /* Espaçamento entre letras */
 }
 
 h2 {
@@ -49,22 +48,20 @@ h2 {
     border: 2px solid var(--border-color);
     border-radius: 12px;
     padding: 40px;
-    box-shadow: 0 0 25px var(--shadow-color);
     width: 90%;
-    max-width: 700px;
+    max-width: 700px; /* Um pouco maior */
     text-align: center;
-    animation: fadeIn 1.5s ease-out;
+    animation: fadeIn 1.5s ease-out; /* Animação de entrada */
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
+    from { opacity: 0; transform: translateY(-15px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 #story-text {
-    min-height: 100px;
-    background-color: var(--darker-bg);
-    border: 1px solid var(--border-color);
+    min-height: 100px; /* Maior altura para mais texto */
+    background-color: var(--dark-bg);
     padding: 20px;
     margin-bottom: 25px;
     border-radius: 8px;
@@ -72,44 +69,44 @@ h2 {
     white-space: pre-wrap;
     font-size: 1.1em;
     line-height: 1.6;
-    box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.5); /* Sombra interna sutil */
 }
 
 .button-group {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 15px; /* Espaço entre os botões */
     margin-bottom: 20px;
 }
 
 button {
-    background-color: var(--border-color);
+    background-color: var(--shadow-color);
     color: white;
-    padding: 14px 30px;
+    padding: 14px 30px; /* Botões maiores */
     border: none;
-    border-radius: 8px;
+    border-radius: 8px; /* Cantos mais suaves */
     cursor: pointer;
     font-size: 1.1em;
-    font-weight: 600;
+    font-weight: 600; /* Mais negrito */
     transition: background-color var(--transition-speed) ease, transform 0.1s ease, box-shadow var(--transition-speed) ease;
-    text-transform: uppercase;
+    text-transform: uppercase; /* Texto em maiúsculas */
     letter-spacing: 0.5px;
 }
 
 button:hover {
-    background-color: #e63900;
+    background-color: var(--principal-color);
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(255, 69, 0, 0.4);
+    box-shadow: 0 5px 15px rgba(34, 5, 24, 0.4);
 }
 
 button:active {
     transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(255, 69, 0, 0.3);
+    box-shadow: 0 2px 8px var(--principal-color);
 }
 
 button:disabled {
     background-color: #555;
-    color: #bbb;
+    color: #dddddd;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
@@ -124,12 +121,12 @@ button:disabled {
 
 #ai-response {
     margin-top: 25px;
-    font-size: 1.6em;
-    font-weight: 600;
+    font-size: 1.6em; /* Resposta maior */
+    font-weight: 600; /* Mais negrito */
     color: var(--accent-color);
-    min-height: 40px;
+    min-height: 40px; /* Garante espaço */
     text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-    animation: pulseText 1.5s infinite alternate;
+    animation: pulseText 1.5s infinite alternate; /* Efeito de pulso para a resposta */
 }
 
 @keyframes pulseText {
@@ -146,22 +143,86 @@ button:disabled {
 
 .disclaimer {
     font-size: 0.8em;
-    color: #888;
+    color: #dddddd;
     margin-top: 30px;
     text-align: center;
 }
-
 #particle-canvas {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: block;
-  z-index: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 0;
+    pointer-events: none !important;
+}
+.custom-orb {
+    font-size: 3rem;
+    filter: hue-rotate(400deg) saturate(100%) brightness(100%) contrast(100%);
+    display: inline;
+    margin-left: 0.3rem; /* pequeno espaço entre texto e emoji */
+    vertical-align: middle; /* alinha melhor com o texto */
 }
 
-.content {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding-top: 20vh;
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5em;
+    }
+
+    h2 {
+        font-size: 1em;
+        margin-bottom: 20px;
+    }
+
+    .game-container {
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    #story-text {
+        font-size: 1em;
+        padding: 15px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    button {
+        padding: 12px 20px;
+        font-size: 1em;
+        width: 100%; /* Botões ocupam largura total */
+    }
+
+    #ai-response {
+        font-size: 1.3em;
+        margin-top: 20px;
+    }
+
+    .disclaimer {
+        font-size: 0.75em;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    .game-container {
+        padding: 15px;
+    }
+
+    #story-text {
+        font-size: 0.95em;
+    }
+
+    button {
+        font-size: 0.95em;
+        padding: 10px 18px;
+    }
+
+    #ai-response {
+        font-size: 1.1em;
+    }
 }

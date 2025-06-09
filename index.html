@@ -3,40 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Myster.IA</title>
+    <title>Oráculo das Sombras</title>
     <meta name="description" content="Processamento de Voz e Reconhecimento de Fala em Narrativas Interativas">
-    
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="imgs/logo.png">
+    <link rel="stylesheet" href="style.css">
 </head>
-
-<body>
+<body>  
     <canvas id="particle-canvas"></canvas>
-    <h1>Oráculo das Sombras</h1>
+    <h1>Dark Myster.IA <span class="custom-orb">🔮</span></h1>
     <h2>Processamento de Voz e Reconhecimento de Fala em Narrativas Interativas</h2>
 
-    <div class="game-container">
-        <p id="story-text">Você se encontra em uma mansão antiga e escura. Há um sussurro no ar. O que você quer perguntar à entidade?</p>
-
-        <p id="recording-status">Pronto para gravar.</p>
-        
-        <div class="button-group">
-            <button id="start-record-button">Começar a Gravar</button>
-            <button id="stop-record-button" disabled>Parar Gravação e Perguntar</button>
-        </div>
-        
-        <p id="ai-response"></p>
-        <p class="error-message" id="error-message"></p>
-        <p class="disclaimer">
-            Este jogo utiliza processamento de voz offline e IA para as interações.
+    <div id="intro-screen" class="game-container">
+        <h2>Bem-vindo ao Dark Myster.IA 🔮</h2>
+        <p>
+            Você está prestes a entrar em um jogo de mistério interativo por voz. Leia a charada, faça perguntas por voz e tente descobrir o enigma. 
+            Só serão aceitas perguntas que possam ser respondidas com <strong>“Sim”, “Não”</strong> ou <strong>“Irrelevante”</strong>.
+            <em>Pense como um detetive. Questione tudo.</em>
         </p>
+        <button id="start-game-button">Vamos lá</button>
     </div>
-    
+
+    <div id="main-game" style="display: none;">
+        <div class="game-container">
+            <p id="story-text">Você se encontra em uma mansão antiga e escura. Há um sussurro no ar. O que você quer perguntar à entidade?</p>
+
+            <div class="button-group">
+                <button id="start-record-button">Começar a Gravar</button>
+                <button id="stop-record-button" disabled>Parar Gravação e Perguntar</button>
+            </div>
+
+            <p id="ai-response"></p>
+            <p class="error-message" id="error-message"></p>
+            <p class="disclaimer">
+                Este jogo utiliza processamento de voz offline e IA para as interações.
+            </p>
+        </div>
+    </div>
+
     <script src="script.js"></script>
-  
 </body>
 </html>
