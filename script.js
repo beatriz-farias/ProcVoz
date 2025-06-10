@@ -260,8 +260,9 @@ async function sendAudioToAPI(blob, intent) {
                 entitySaysText = data.message; // Parabéns!
                 if (data.next_riddle_text) {
                     console.log(`DEBUG FRONTEND: Próxima charada detectada: "${data.next_riddle_text}"`); // NOVO DEBUG
-                    currentRiddleId = data.current_riddle_id; // Atualiza ID da charada
                     currentRiddleText = data.next_riddle_text; // NOVO: Atualiza o texto da charada
+                    currentRiddleId = data.current_riddle_id + 1;
+                    console.log(`DEBUG FRONTEND: Próxima charada ID: "${currentRiddleId}"`);
                     newStorySnippet = currentRiddleText; // Define a base para a próxima charada
                 } else {
                     console.log("DEBUG FRONTEND: Última charada resolvida (jogo completo)."); // NOVO DEBUG
