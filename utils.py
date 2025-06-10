@@ -5,17 +5,6 @@ import os
 import io
 import tempfile
 
-PIPER_EXECUTABLE_PATH = os.path.join(os.path.dirname(__file__), 'voices', 'piper.exe')
-PIPER_VOICE_MODEL = os.path.join(os.path.dirname(__file__), 'voices', 'pt_BR-faber-medium.onnx')
-
-PIPER_SAMPLE_RATE = 22050
-
-# --- Initial checks for Piper files ---
-if not os.path.exists(PIPER_EXECUTABLE_PATH):
-    print(f"ERRO: Executável do Piper TTS não encontrado em '{PIPER_EXECUTABLE_PATH}'. Verifique seu caminho.")
-if not os.path.exists(PIPER_VOICE_MODEL):
-    print(f"ERRO: Modelo de voz do Piper TTS não encontrado em '{PIPER_VOICE_MODEL}'. Verifique seu caminho.")
-
 def convert_audio_to_wav(audio_file_path: str) -> io.BytesIO:
     try:
         audio = AudioSegment.from_file(audio_file_path)

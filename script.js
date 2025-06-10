@@ -286,7 +286,7 @@ async function sendAudioToAPI(blob, intent) {
         console.log(`DEBUG FRONTEND: aiResponse.textContent atualizado.`);
         
         console.log(`DEBUG FRONTEND: newStorySnippet para exibição: '${newStorySnippet}'`);
-        storyText.textContent = newStorySnippet;
+        // storyText.textContent = newStorySnippet;
         console.log(`DEBUG FRONTEND: storyText.textContent atualizado.`);
 
 
