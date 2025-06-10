@@ -12,7 +12,7 @@ const aiResponse = document.getElementById('ai-response');
 const storyText = document.getElementById('story-text');
 const errorMessage = document.getElementById('error-message');
 
-const API_BASE_URL = 'http://127.0.0.1:8000'; // Base URL para sua API
+const API_BASE_URL = 'https://backend-darkmysteria.onrender.com/'; // Base URL para sua API
 const ASK_API_URL = `${API_BASE_URL}/ask_ai_audio`;
 const INITIAL_RIDDLE_URL = `${API_BASE_URL}/get_initial_riddle`;
 
