@@ -12,7 +12,7 @@
       }
 
 body {
-    font-family: 'UnifrakturCook', cursive;
+     font-family: 'Poppins', sans-serif; /* Fonte geral mais limpa */
     background-color: var(--darker-bg);
     color: var(--text-color);
     display: flex;
@@ -27,7 +27,7 @@ body {
 }
 
 h1 {
-    font-family: 'Creepster', cursive; /* Fonte especial para o título */
+    font-family: 'UnifrakturCook', cursive;
     font-size: 3.5em; /* Tamanho maior */
     color: var(--principal-color);
     text-shadow: 3px 3px 6px var(--shadow-color); /* Sombra mais intensa */
