@@ -128,7 +128,7 @@ startGameButton.addEventListener('click', async () => {
         }
         const data = await response.json();
         currentRiddleId = data.riddle_id;
-        storyText.textContent = `Você se encontra em uma mansão antiga e escura. Há um sussurro no ar. A charada é: "${data.riddle_text}". O que você quer perguntar à entidade?`;
+        storyText.textContent = `A charada é: "${data.riddle_text}". O que você quer perguntar à entidade?`;
         console.log("DEBUG FRONTEND: Charada inicial carregada. ID:", currentRiddleId);
         updateButtonStates(false, false, false); // Habilita botões de iniciar após carregar
     } catch (error) {

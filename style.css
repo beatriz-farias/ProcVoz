@@ -12,7 +12,7 @@
       }
 
 body {
-    font-family: 'Poppins', sans-serif; /* Fonte geral mais limpa */
+    font-family: 'UnifrakturCook', cursive;
     background-color: var(--darker-bg);
     color: var(--text-color);
     display: flex;
