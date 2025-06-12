@@ -12,7 +12,7 @@ const aiResponse = document.getElementById('ai-response');
 const storyText = document.getElementById('story-text');
 const errorMessage = document.getElementById('error-message');
 
-const API_BASE_URL = 'http://127.0.0.1:8000'; // Base URL para sua API
+const API_BASE_URL = 'https://backend-darkmysteria.onrender.com'; // Base URL para sua API
 const ASK_API_URL = `${API_BASE_URL}/ask_ai_audio`;
 const INITIAL_RIDDLE_URL = `${API_BASE_URL}/get_initial_riddle`;
 
@@ -22,6 +22,7 @@ let audioChunks = [];
 let audioBlob;
 let currentRiddleId = null; // Armazena o ID da charada atual
 let activeIntent = null; // Armazena a intenção do jogador ('ask_question' ou 'say_answer')
+let currentRiddleText = "";
 
 // --- Lógica do Canvas de Partículas ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -243,23 +244,28 @@ async function sendAudioToAPI(blob, intent) {
         console.log("DEBUG FRONTEND: Dados da API recebidos e parseados (JSON).", data);
 
         // --- Lógica para Atualizar a UI com base na resposta da API ---
-        let newStorySnippet = '';
+        let newStorySnippet = currentRiddleText;
         let entitySaysText = '';
 
         if (data.status === "error") {
             entitySaysText = data.message;
-            newStorySnippet = `A entidade parece confusa. Tente novamente: ${data.message}.`;
+            errorMessage.textContent =  `A entidade parece confusa. Tente novamente: ${data.message}.`;
+            newStorySnippet = currentRiddleText; 
         } else if (data.type === "question_response") {
             entitySaysText = data.message; // Sim, Não, Irrelevante
-            newStorySnippet = `A entidade responde: "${data.message}". O que mais você quer perguntar sobre a charada?`;
+            newStorySnippet = currentRiddleText;
             currentRiddleId = data.current_riddle_id; // Garante que o ID não mudou
         } else if (data.type === "answer_evaluation") {
             if (data.correct) {
                 entitySaysText = data.message; // Parabéns!
                 if (data.next_riddle_text) {
-                    newStorySnippet = `${data.message} A próxima charada é: "${data.next_riddle_text}". O que você quer perguntar sobre ela?`;
-                    currentRiddleId = data.current_riddle_id; // Atualiza para o ID da próxima charada
+                    console.log(`DEBUG FRONTEND: Próxima charada detectada: "${data.next_riddle_text}"`); // NOVO DEBUG
+                    currentRiddleText = data.next_riddle_text; // NOVO: Atualiza o texto da charada
+                    currentRiddleId = data.current_riddle_id + 1;
+                    console.log(`DEBUG FRONTEND: Próxima charada ID: "${currentRiddleId}"`);
+                    newStorySnippet = currentRiddleText; // Define a base para a próxima charada
                 } else {
+                    console.log("DEBUG FRONTEND: Última charada resolvida (jogo completo)."); // NOVO DEBUG
                     newStorySnippet = `${data.message} O jogo foi concluído!`;
                     currentRiddleId = data.current_riddle_id; // Mantém o ID da última charada
                 }
@@ -267,7 +273,7 @@ async function sendAudioToAPI(blob, intent) {
                 entitySaysText = data.message; // Resposta incorreta
                 // Pega o texto da charada atual diretamente do elemento storyText antes de ser atualizado
                 // Isso evita ter que passar riddle_text do backend para cada resposta incorreta.
-                newStorySnippet = `${data.message} A charada ainda é: "${data.current_riddle_text}". Tente novamente.`;
+                newStorySnippet = currentRiddleText;
                 currentRiddleId = data.current_riddle_id;
             }
         } else if (data.type === "game_complete") {
@@ -286,7 +292,7 @@ async function sendAudioToAPI(blob, intent) {
         console.log(`DEBUG FRONTEND: aiResponse.textContent atualizado.`);
         
         console.log(`DEBUG FRONTEND: newStorySnippet para exibição: '${newStorySnippet}'`);
-        // storyText.textContent = newStorySnippet;
+        storyText.textContent = newStorySnippet;
         console.log(`DEBUG FRONTEND: storyText.textContent atualizado.`);
 
 
