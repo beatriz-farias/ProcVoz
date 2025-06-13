@@ -253,8 +253,10 @@ async function sendAudioToAPI(blob, intent) {
             newStorySnippet = currentRiddleText; 
         } else if (data.type === "question_response") {
             entitySaysText = data.message; // Sim, Não, Irrelevante
-            newStorySnippet = currentRiddleText;
-            currentRiddleId = data.current_riddle_id; // Garante que o ID não mudou
+
+            newStorySnippet = storyText.textContent || "Charada atual indisponível."; 
+
+            currentRiddleId = data.current_riddle_id;
         } else if (data.type === "answer_evaluation") {
             if (data.correct) {
                 entitySaysText = data.message; // Parabéns!
