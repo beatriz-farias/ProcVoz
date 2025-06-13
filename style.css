@@ -27,8 +27,8 @@ body {
 }
 
 h1 {
-    font-family: 'UnifrakturCook', cursive;
-    font-size: 3.5em; /* Tamanho maior */
+    font-family: 'Creepster', cursive; /* Fonte especial para o título */
+    font-size: 4em; /* Tamanho maior */
     color: var(--principal-color);
     text-shadow: 3px 3px 6px var(--shadow-color); /* Sombra mais intensa */
     margin-bottom: 10px;
